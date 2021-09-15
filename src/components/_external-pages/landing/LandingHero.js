@@ -200,6 +200,7 @@ export default function LandingHero() {
                   color="white"
                   style={{ fontSize: 40, fontWeight: 400 }}
                   sx={{ mb: 3 }}
+                  textAlign="center"
                 >
                   Hiring made simple with our AI based global talent platform
                 </Typography>
@@ -209,6 +210,7 @@ export default function LandingHero() {
                   color="white"
                   style={{ fontSize: 20, fontWeight: 200 }}
                   sx={{ mb: 3 }}
+                  textAlign="center"
                 >
                   Hiring made simple with our AI based global talent platform
                 </Typography>
@@ -222,6 +224,7 @@ export default function LandingHero() {
                   color="white"
                   style={{ fontSize: 80, fontWeight: 500 }}
                   sx={{ mb: 3 }}
+                  textAlign="center"
                 >
                   Find your <span style={{ color: "#2C7BFF" }}>dream</span> job
                 </Typography>
@@ -231,6 +234,7 @@ export default function LandingHero() {
                   color="white"
                   style={{ fontSize: 30, fontWeight: 300 }}
                   sx={{ mb: 3 }}
+                  textAlign="center"
                 >
                   Find your <span style={{ color: "#2C7BFF" }}>dream</span> job
                 </Typography>

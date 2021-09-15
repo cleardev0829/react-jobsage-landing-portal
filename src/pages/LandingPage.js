@@ -1,6 +1,9 @@
 // material
 import { experimentalStyled as styled } from "@material-ui/core/styles";
-import { AboutTeam, ContactUsWithMap } from "src/components/_external-pages/about";
+import {
+  AboutTeam,
+  ContactUsWithMap,
+} from "src/components/_external-pages/about";
 // components
 import Page from "../components/Page";
 import { LandingHero, PostItem } from "../components/_external-pages/landing";
@@ -20,7 +23,7 @@ const ContentStyle = styled("div")(({ theme }) => ({
 const data = {
   reimagine: {
     prefix: "Reimagine",
-    suffix: "Recruitement",
+    suffix: "Recruitment",
     description: [
       {
         suffix:
@@ -49,8 +52,9 @@ const data = {
     suffix: "Engagement",
     description: [
       {
-        suffix: "Leverage our AI Chatbots to upgrade your candidate screening & engagements, schedule and reschedule interviews with bulk emailing."
-      }
+        suffix:
+          "Leverage our AI Chatbots to upgrade your candidate screening & engagements, schedule and reschedule interviews with bulk emailing.",
+      },
     ],
     imageUrl: "/static/home/Candidate Engagement.png",
     direction: true,
@@ -60,19 +64,21 @@ const data = {
     suffix: "Parsing",
     description: [
       {
-        suffix: "Our resume parser extracts complex personas in no time. With our deep learning module, you can extract candidate persona with ease and finesse--all for a low price!"
-      }
-    ],      
+        suffix:
+          "Our resume parser extracts complex personas in no time. With our deep learning module, you can extract candidate persona with ease and finesse--all for a low price!",
+      },
+    ],
     imageUrl: "/static/home/Resume parsing.png",
     direction: false,
   },
   founder: {
-    title: "Founder Details",   
+    title: "Founder Details",
     description: [
       {
-        prefix: "Arvind has over 16 years of product management experience, having launched and implemented a range of tech products for enterprises. Arvind holds the Top Innovator Award from TATA Group as well as the prestigious Young Manager Award from MMA (Mumbai Management Association)."
-      }
-    ],      
+        prefix:
+          "Arvind has over 16 years of product management experience, having launched and implemented a range of tech products for enterprises. Arvind holds the Top Innovator Award from TATA Group as well as the prestigious Young Manager Award from MMA (Mumbai Management Association).",
+      },
+    ],
     imageUrl: "/static/home/Arvind Radhakrishnen.jpg",
     direction: false,
   },

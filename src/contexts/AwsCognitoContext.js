@@ -1,12 +1,16 @@
-import { createContext, useCallback, useEffect, useReducer } from 'react';
-import PropTypes from 'prop-types';
-import { CognitoUser, CognitoUserPool, AuthenticationDetails } from 'amazon-cognito-identity-js';
+import { createContext, useCallback, useEffect, useReducer } from "react";
+import PropTypes from "prop-types";
+import {
+  CognitoUser,
+  CognitoUserPool,
+  AuthenticationDetails,
+} from "amazon-cognito-identity-js";
 // utils
-import axios from '../utils/axios';
+import axios from "../utils/axios";
 // routes
-import { PATH_AUTH } from '../routes/paths';
+import { PATH_AUTH } from "../routes/paths";
 //
-import { cognitoConfig } from '../config';
+import { cognitoConfig } from "../config";
 
 // ----------------------------------------------------------------------
 
@@ -14,13 +18,13 @@ import { cognitoConfig } from '../config';
 
 export const UserPool = new CognitoUserPool({
   UserPoolId: cognitoConfig.userPoolId,
-  ClientId: cognitoConfig.clientId
+  ClientId: cognitoConfig.clientId,
 });
 
 const initialState = {
   isAuthenticated: false,
   isInitialized: false,
-  user: null
+  user: null,
 };
 
 const handlers = {
@@ -31,28 +35,29 @@ const handlers = {
       ...state,
       isAuthenticated,
       isInitialized: true,
-      user
+      user,
     };
   },
   LOGOUT: (state) => ({
     ...state,
     isAuthenticated: false,
-    user: null
-  })
+    user: null,
+  }),
 };
 
-const reducer = (state, action) => (handlers[action.type] ? handlers[action.type](state, action) : state);
+const reducer = (state, action) =>
+  handlers[action.type] ? handlers[action.type](state, action) : state;
 
 const AuthContext = createContext({
   ...initialState,
-  method: 'cognito',
+  method: "cognito",
   login: () => Promise.resolve(),
   register: () => Promise.resolve(),
-  logout: () => Promise.resolve()
+  logout: () => Promise.resolve(),
 });
 
 AuthProvider.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
 };
 
 function AuthProvider({ children }) {
@@ -91,23 +96,23 @@ function AuthProvider({ children }) {
               // use the token or Bearer depend on the wait BE handle, by default amplify API only need to token.
               axios.defaults.headers.common.Authorization = token;
               dispatch({
-                type: 'AUTHENTICATE',
-                payload: { isAuthenticated: true, user: attributes }
+                type: "AUTHENTICATE",
+                payload: { isAuthenticated: true, user: attributes },
               });
               resolve({
                 user,
                 session,
-                headers: { Authorization: token }
+                headers: { Authorization: token },
               });
             }
           });
         } else {
           dispatch({
-            type: 'AUTHENTICATE',
+            type: "AUTHENTICATE",
             payload: {
               isAuthenticated: false,
-              user: null
-            }
+              user: null,
+            },
           });
         }
       }),
@@ -119,11 +124,11 @@ function AuthProvider({ children }) {
       await getSession();
     } catch {
       dispatch({
-        type: 'AUTHENTICATE',
+        type: "AUTHENTICATE",
         payload: {
           isAuthenticated: false,
-          user: null
-        }
+          user: null,
+        },
       });
     }
   }, [getSession]);
@@ -140,12 +145,12 @@ function AuthProvider({ children }) {
       new Promise((resolve, reject) => {
         const user = new CognitoUser({
           Username: email,
-          Pool: UserPool
+          Pool: UserPool,
         });
 
         const authDetails = new AuthenticationDetails({
           Username: email,
-          Password: password
+          Password: password,
         });
 
         user.authenticateUser(authDetails, {
@@ -158,8 +163,8 @@ function AuthProvider({ children }) {
           },
           newPasswordRequired: () => {
             // Handle this on login page for update password.
-            resolve({ message: 'newPasswordRequired' });
-          }
+            resolve({ message: "newPasswordRequired" });
+          },
         });
       }),
     [getSession]
@@ -170,7 +175,7 @@ function AuthProvider({ children }) {
     const user = UserPool.getCurrentUser();
     if (user) {
       user.signOut();
-      dispatch({ type: 'LOGOUT' });
+      dispatch({ type: "LOGOUT" });
     }
   };
 
@@ -180,8 +185,8 @@ function AuthProvider({ children }) {
         email,
         password,
         [
-          { Name: 'email', Value: email },
-          { Name: 'name', Value: `${firstName} ${lastName}` }
+          { Name: "email", Value: email },
+          { Name: "name", Value: `${firstName} ${lastName}` },
         ],
         null,
         async (err) => {
@@ -190,7 +195,7 @@ function AuthProvider({ children }) {
             return;
           }
           resolve();
-          window.location.href = PATH_AUTH.login;
+          window.location.href = PATH_AUTH.employerLogin;
         }
       )
     );
@@ -201,16 +206,16 @@ function AuthProvider({ children }) {
     <AuthContext.Provider
       value={{
         ...state,
-        method: 'cognito',
+        method: "cognito",
         user: {
-          displayName: state?.user?.name || 'Minimals',
-          role: 'admin',
-          ...state.user
+          displayName: state?.user?.name || "Minimals",
+          role: "admin",
+          ...state.user,
         },
         login,
         register,
         logout,
-        resetPassword
+        resetPassword,
       }}
     >
       {children}

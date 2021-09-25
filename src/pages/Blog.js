@@ -11,7 +11,7 @@ import {
   BlogPostCard,
   BlogPostsSort,
   BlogPostsSearch,
-} from "../components/_dashboard/blog";
+} from "../components/_external-pages/blog";
 
 // ----------------------------------------------------------------------
 
@@ -65,7 +65,7 @@ export default function BlogPosts() {
   const dispatch = useDispatch();
   const [filters, setFilters] = useState("latest");
   const { posts, hasMore, index, step } = useSelector((state) => state.blog);
-  console.log("=============================================", posts);
+
   const sortedPosts = applySort(posts, filters);
   const onScroll = useCallback(() => dispatch(getMorePosts()), [dispatch]);
 

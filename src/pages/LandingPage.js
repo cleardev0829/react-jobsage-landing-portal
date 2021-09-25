@@ -8,8 +8,6 @@ import {
 import Page from "../components/Page";
 import { LandingHero, PostItem } from "../components/_external-pages/landing";
 
-// ----------------------------------------------------------------------
-
 const RootStyle = styled(Page)({
   height: "100%",
 });
@@ -84,8 +82,6 @@ const data = {
   },
 };
 
-// ----------------------------------------------------------------------
-
 export default function LandingPage() {
   return (
     <RootStyle title="This is IRekommend website | Minimal-UI" id="move_top">
@@ -95,7 +91,6 @@ export default function LandingPage() {
         <PostItem {...data.our} />
         <PostItem {...data.candidate} />
         <PostItem {...data.resume} />
-        {/* <PostItem {...data.founder} /> */}
         <AboutTeam />
         <ContactUsWithMap />
       </ContentStyle>

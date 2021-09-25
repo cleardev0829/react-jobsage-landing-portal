@@ -13,8 +13,8 @@ import {
   IconButton,
   InputAdornment,
   Alert,
-  FormControlLabel,
-  Checkbox,
+  // FormControlLabel,
+  // Checkbox,
 } from "@material-ui/core";
 import { LoadingButton } from "@material-ui/lab";
 // hooks
@@ -27,7 +27,7 @@ import countries from "./countries";
 // ----------------------------------------------------------------------
 
 export default function RegisterForm() {
-  const { register } = useAuth();
+  const { candidateRegister } = useAuth();
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [showPassword, setShowPassword] = useState(false);
@@ -42,7 +42,7 @@ export default function RegisterForm() {
       .required("Email is required"),
     password: Yup.string().required("Password is required"),
     phoneNumber: Yup.string().required("Phone Number required"),
-    country: Yup.string().required("Phone Number required"),
+    country: Yup.string().required(" Country required"),
     job: Yup.string().required("Desired Job required"),
   });
 
@@ -58,7 +58,14 @@ export default function RegisterForm() {
     validationSchema: RegisterSchema,
     onSubmit: async (values, { setErrors, setSubmitting }) => {
       try {
-        await register(values.fullname, values.email, values.password);
+        await candidateRegister(
+          values.fullname,
+          values.email,
+          values.password,
+          values.phoneNumber,
+          values.country,
+          values.job
+        );
         enqueueSnackbar("Register success", {
           variant: "success",
           action: (key) => (
@@ -173,10 +180,15 @@ export default function RegisterForm() {
             ))}
           </TextField>
 
-          <FormControlLabel
-            control={<Checkbox />}
+          {/* <FormControlLabel
+            control={
+              <Checkbox
+                {...getFieldProps("availableWork")}
+                checked={values.availableWork}
+              />
+            }
             label="Abailability to work"
-          />
+          /> */}
 
           <TextField
             fullWidth

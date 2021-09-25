@@ -1,24 +1,24 @@
-import { Icon } from '@iconify/react';
-import { Link as RouterLink } from 'react-router-dom';
-import arrowIosBackFill from '@iconify/icons-eva/arrow-ios-back-fill';
+import { Icon } from "@iconify/react";
+import { Link as RouterLink } from "react-router-dom";
+import arrowIosBackFill from "@iconify/icons-eva/arrow-ios-back-fill";
 // material
-import { experimentalStyled as styled } from '@material-ui/core/styles';
-import { Box, Button, Link, Container, Typography } from '@material-ui/core';
+import { experimentalStyled as styled } from "@material-ui/core/styles";
+import { Box, Button, Link, Container, Typography } from "@material-ui/core";
 // layouts
-import LogoOnlyLayout from '../../layouts/LogoOnlyLayout';
+import LogoOnlyLayout from "../../layouts/LogoOnlyLayout";
 // routes
-import { PATH_AUTH } from '../../routes/paths';
+import { PATH_AUTH } from "../../routes/paths";
 // components
-import Page from '../../components/Page';
-import { VerifyCodeForm } from '../../components/authentication/verify-code';
+import Page from "../../components/Page";
+import { VerifyCodeForm } from "../../components/authentication/verify-code";
 
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(Page)(({ theme }) => ({
-  display: 'flex',
-  minHeight: '100%',
-  alignItems: 'center',
-  padding: theme.spacing(12, 0)
+  display: "flex",
+  minHeight: "100%",
+  alignItems: "center",
+  padding: theme.spacing(12, 0),
 }));
 
 // ----------------------------------------------------------------------
@@ -29,11 +29,11 @@ export default function VerifyCode() {
       <LogoOnlyLayout />
 
       <Container>
-        <Box sx={{ maxWidth: 480, mx: 'auto' }}>
+        <Box sx={{ maxWidth: 480, mx: "auto" }}>
           <Button
             size="small"
             component={RouterLink}
-            to={PATH_AUTH.login}
+            to={PATH_AUTH.employerLogin}
             startIcon={<Icon icon={arrowIosBackFill} width={20} height={20} />}
             sx={{ mb: 3 }}
           >
@@ -43,9 +43,9 @@ export default function VerifyCode() {
           <Typography variant="h3" paragraph>
             Please check your email!
           </Typography>
-          <Typography sx={{ color: 'text.secondary' }}>
-            We have emailed a 6-digit confirmation code to acb@domain, please enter the code in below box to verify your
-            email.
+          <Typography sx={{ color: "text.secondary" }}>
+            We have emailed a 6-digit confirmation code to acb@domain, please
+            enter the code in below box to verify your email.
           </Typography>
 
           <Box sx={{ mt: 5, mb: 3 }}>

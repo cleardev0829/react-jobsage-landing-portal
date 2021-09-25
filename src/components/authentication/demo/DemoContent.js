@@ -1,16 +1,16 @@
 import {
   alpha,
-  useTheme,
+  // useTheme,
   experimentalStyled as styled,
 } from "@material-ui/core/styles";
 import {
   Box,
   Grid,
-  Button,
+  // Button,
   Container,
   Typography,
   Divider,
-  ListItem,
+  // ListItem,
 } from "@material-ui/core";
 import { varFadeInUp, MotionInView } from "../../animate";
 import { MHidden } from "../../@material-extend";
@@ -40,37 +40,37 @@ const ContentStyle = styled("div")(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-function IconBullet({ type = "item" }) {
-  return (
-    <Box sx={{ width: 24, height: 16, display: "flex", alignItems: "center" }}>
-      <Box
-        component="span"
-        sx={{
-          ml: "2px",
-          width: 4,
-          height: 4,
-          borderRadius: "50%",
-          bgcolor: "currentColor",
-          ...(type !== "item" && {
-            ml: 0,
-            width: 8,
-            height: 2,
-            borderRadius: 2,
-          }),
-        }}
-      />
-    </Box>
-  );
-}
+// function IconBullet({ type = "item" }) {
+//   return (
+//     <Box sx={{ width: 24, height: 16, display: "flex", alignItems: "center" }}>
+//       <Box
+//         component="span"
+//         sx={{
+//           ml: "2px",
+//           width: 4,
+//           height: 4,
+//           borderRadius: "50%",
+//           bgcolor: "currentColor",
+//           ...(type !== "item" && {
+//             ml: 0,
+//             width: 8,
+//             height: 2,
+//             borderRadius: 2,
+//           }),
+//         }}
+//       />
+//     </Box>
+//   );
+// }
 
 export default function DemoContent(props) {
-  const theme = useTheme();
-  const isLight = theme.palette.mode === "light";
+  // const theme = useTheme();
+  // const isLight = theme.palette.mode === "light";
 
   return (
     <RootStyle>
-      <Container maxWidth="lg">        
-        <Grid container spacing={5} justifyContent="center">          
+      <Container maxWidth="lg">
+        <Grid container spacing={5} justifyContent="center">
           <Grid
             item
             xs={12}
@@ -91,7 +91,7 @@ export default function DemoContent(props) {
             </ContentStyle>
           </Grid>
 
-          <Grid item xs={12} md={6} dir="ltr" sx={{pl: 10}}>
+          <Grid item xs={12} md={6} dir="ltr" sx={{ pl: 10 }}>
             <Box>
               <MotionInView variants={varFadeInUp}>
                 <img alt={`screen`} src="/static/demo/demo.png" />

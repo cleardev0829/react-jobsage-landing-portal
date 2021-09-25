@@ -2,13 +2,13 @@ import { Link as RouterLink } from "react-router-dom";
 // material
 import { experimentalStyled as styled } from "@material-ui/core/styles";
 import {
-  Box,
-  Card,
+  // Box,
+  // Card,
   Paper,
   Link,
   Container,
   Typography,
-  Tooltip,
+  // Tooltip,
   Stack,
 } from "@material-ui/core";
 // hooks
@@ -16,11 +16,14 @@ import useAuth from "../../hooks/useAuth";
 // routes
 import { PATH_AUTH } from "../../routes/paths";
 // layouts
-import AuthLayout from "../../layouts/AuthLayout";
+// import AuthLayout from "../../layouts/AuthLayout";
 // components
 import Page from "../../components/Page";
-import { MHidden } from "../../components/@material-extend";
-import { CandidateRegisterForm } from "../../components/authentication/register";
+// import { MHidden } from "../../components/@material-extend";
+import {
+  CandidateRegisterForm,
+  CandidateUpdateProfileForm,
+} from "../../components/authentication/register";
 import AuthFirebaseSocials from "../../components/authentication/AuthFirebaseSocial";
 import Logo from "src/components/Logo";
 
@@ -46,7 +49,7 @@ const ContentStyle = styled("div")(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function CandidateRegister() {
-  const { method } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   return (
     <RootStyle title="Register | Minimal-UI">
@@ -78,38 +81,46 @@ export default function CandidateRegister() {
               </Box> */}
             </Stack>
 
-            <AuthFirebaseSocials />
+            {!isAuthenticated && <AuthFirebaseSocials />}
 
-            <CandidateRegisterForm />
+            {isAuthenticated ? (
+              <CandidateUpdateProfileForm />
+            ) : (
+              <CandidateRegisterForm />
+            )}
 
-            <Typography
-              variant="subtitle2"
-              sx={{ mt: 3, textAlign: "center" }}
-              color="text.secondary"
-            >
-              <span style={{ fontWeight: 500 }}>
-                Already have an account?&nbsp;
-              </span>
-              <Link
-                to={PATH_AUTH.candidateLogin}
-                component={RouterLink}
-                color="secondary"
-              >
-                <span style={{ fontWeight: 600 }}>Login</span>
-              </Link>
-            </Typography>
+            {!isAuthenticated && (
+              <>
+                <Typography
+                  variant="subtitle2"
+                  sx={{ mt: 3, textAlign: "center" }}
+                  color="text.secondary"
+                >
+                  <span style={{ fontWeight: 500 }}>
+                    Already have an account?&nbsp;
+                  </span>
+                  <Link
+                    to={PATH_AUTH.candidateLogin}
+                    component={RouterLink}
+                    color="secondary"
+                  >
+                    <span style={{ fontWeight: 600 }}>Login</span>
+                  </Link>
+                </Typography>
 
-            <Typography
-              variant="body2"
-              align="center"
-              color="text.secondary"
-              sx={{ mt: 3 }}
-            >
-              <span style={{ fontWeight: 500 }}>
-                by clicking submit and joining us, you agree to the terms and
-                conditions & Privacy policy of IRekommend
-              </span>
-            </Typography>
+                <Typography
+                  variant="body2"
+                  align="center"
+                  color="text.secondary"
+                  sx={{ mt: 3 }}
+                >
+                  <span style={{ fontWeight: 500 }}>
+                    by clicking submit and joining us, you agree to the terms
+                    and conditions & Privacy policy of IRekommend
+                  </span>
+                </Typography>
+              </>
+            )}
           </Paper>
         </ContentStyle>
       </Container>

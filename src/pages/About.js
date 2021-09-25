@@ -1,14 +1,14 @@
 // material
 import { experimentalStyled as styled } from "@material-ui/core/styles";
-import { Divider } from "@material-ui/core";
+// import { Divider } from "@material-ui/core";
 // components
 import Page from "../components/Page";
 import {
-  AboutHero,
-  AboutWhat,
+  // AboutHero,
+  // AboutWhat,
   AboutTeam,
-  AboutVision,
-  AboutTestimonials,
+  // AboutVision,
+  // AboutTestimonials,
   ContactUs,
 } from "../components/_external-pages/about";
 import { PostItem } from "src/components/_external-pages/landing";

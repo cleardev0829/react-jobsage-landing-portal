@@ -16,9 +16,8 @@ import {
   Box,
 } from "@material-ui/core";
 import fakeRequest from "../../../utils/fakeRequest";
-import { PATH_DASHBOARD } from "../../../routes/paths";
+// import { PATH_DASHBOARD } from "../../../routes/paths";
 import { UploadMultiFile } from "../../upload";
-
 
 const LabelStyle = styled(Typography)(({ theme }) => ({
   ...theme.typography.subtitle2,
@@ -48,7 +47,7 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
       name: currentProduct?.name || "",
       email: currentProduct?.email || "",
       phoneNumber: currentProduct?.phoneNumber || "",
-      images: currentProduct?.images || [],     
+      images: currentProduct?.images || [],
     },
     validationSchema: NewProductSchema,
     onSubmit: async (values, { setSubmitting, resetForm, setErrors }) => {
@@ -59,7 +58,7 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
         enqueueSnackbar(!isEdit ? "Create success" : "Update success", {
           variant: "success",
         });
-        navigate(PATH_DASHBOARD.eCommerce.list);
+        // navigate(PATH_DASHBOARD.eCommerce.list);
       } catch (error) {
         console.error(error);
         setSubmitting(false);
@@ -109,20 +108,20 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
             <Card sx={{ p: 3 }}>
               <Stack spacing={3}>
                 {/* <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 3, sm: 2 }}> */}
-                  <TextField
-                    fullWidth
-                    label="Full Name"
-                    {...getFieldProps('name')}
-                    error={Boolean(touched.name && errors.name)}
-                    helperText={touched.name && errors.name}
-                  />
-                  <TextField
-                    fullWidth
-                    label="Email Address"
-                    {...getFieldProps('email')}
-                    error={Boolean(touched.email && errors.email)}
-                    helperText={touched.email && errors.email}
-                  />
+                <TextField
+                  fullWidth
+                  label="Full Name"
+                  {...getFieldProps("name")}
+                  error={Boolean(touched.name && errors.name)}
+                  helperText={touched.name && errors.name}
+                />
+                <TextField
+                  fullWidth
+                  label="Email Address"
+                  {...getFieldProps("email")}
+                  error={Boolean(touched.email && errors.email)}
+                  helperText={touched.email && errors.email}
+                />
                 {/* </Stack> */}
 
                 <TextField

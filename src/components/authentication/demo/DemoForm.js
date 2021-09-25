@@ -1,20 +1,20 @@
 import * as Yup from "yup";
-import { useState } from "react";
+// import { useState } from "react";
 import { Icon } from "@iconify/react";
 import { useSnackbar } from "notistack";
 import { useFormik, Form, FormikProvider } from "formik";
-import eyeFill from "@iconify/icons-eva/eye-fill";
+// import eyeFill from "@iconify/icons-eva/eye-fill";
 import closeFill from "@iconify/icons-eva/close-fill";
-import eyeOffFill from "@iconify/icons-eva/eye-off-fill";
+// import eyeOffFill from "@iconify/icons-eva/eye-off-fill";
 // material
 import {
   Stack,
   TextField,
-  IconButton,
-  InputAdornment,
+  // IconButton,
+  // InputAdornment,
   Alert,
   Typography,
-  Button,
+  // Button,
   FormControlLabel,
   Checkbox,
   Box,
@@ -33,7 +33,7 @@ export default function RegisterForm() {
   const { register } = useAuth();
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const [showPassword, setShowPassword] = useState(false);
+  // const [showPassword, setShowPassword] = useState(false);
 
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -102,8 +102,14 @@ export default function RegisterForm() {
     },
   });
 
-  const { errors, touched, values, handleSubmit, isSubmitting, getFieldProps } =
-    formik;
+  const {
+    errors,
+    touched,
+    values,
+    handleSubmit,
+    isSubmitting,
+    getFieldProps,
+  } = formik;
 
   return (
     <FormikProvider value={formik}>

@@ -1,16 +1,16 @@
 import PropTypes from "prop-types";
 // material
 import {
-  alpha,
-  useTheme,
+  // alpha,
+  // useTheme,
   experimentalStyled as styled,
 } from "@material-ui/core/styles";
 import {
   Box,
   Grid,
-  Card,
+  // Card,
   Paper,
-  Container,
+  // Container,
   Typography,
 } from "@material-ui/core";
 //
@@ -18,7 +18,7 @@ import {
   varFadeIn,
   varFadeInUp,
   MotionInView,
-  varFadeInDown,
+  // varFadeInDown,
 } from "../../animate";
 
 // ----------------------------------------------------------------------

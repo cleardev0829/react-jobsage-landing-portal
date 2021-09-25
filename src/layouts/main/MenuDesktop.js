@@ -1,13 +1,22 @@
-import PropTypes from 'prop-types';
-import { Icon } from '@iconify/react';
-import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
-import { NavLink as RouterLink, useLocation } from 'react-router-dom';
-import arrowIosUpwardFill from '@iconify/icons-eva/arrow-ios-upward-fill';
-import arrowIosDownwardFill from '@iconify/icons-eva/arrow-ios-downward-fill';
+import PropTypes from "prop-types";
+import { Icon } from "@iconify/react";
+// import { motion } from 'framer-motion';
+import { useState, useEffect } from "react";
+import { NavLink as RouterLink, useLocation } from "react-router-dom";
+import arrowIosUpwardFill from "@iconify/icons-eva/arrow-ios-upward-fill";
+import arrowIosDownwardFill from "@iconify/icons-eva/arrow-ios-downward-fill";
 // material
-import { experimentalStyled as styled } from '@material-ui/core/styles';
-import { Box, Link, Grid, List, Stack, Popover, ListItem, ListSubheader, CardActionArea, Menu } from '@material-ui/core';
+import { experimentalStyled as styled } from "@material-ui/core/styles";
+import {
+  Box,
+  Link,
+  Grid,
+  List,
+  Stack,
+  ListItem,
+  Menu,
+} from "@material-ui/core";
+import useAuth from "../../hooks/useAuth";
 
 // ----------------------------------------------------------------------
 
@@ -15,33 +24,38 @@ const LinkStyle = styled(Link)(({ theme }) => ({
   ...theme.typography.subtitle2,
   color: theme.palette.text.primary,
   marginRight: theme.spacing(5),
-  transition: theme.transitions.create('opacity', {
-    duration: theme.transitions.duration.shortest
+  transition: theme.transitions.create("opacity", {
+    duration: theme.transitions.duration.shortest,
   }),
-  '&:hover': {
+  "&:hover": {
     opacity: 0.48,
-    textDecoration: 'none'
-  }
+    textDecoration: "none",
+  },
 }));
 
 // ----------------------------------------------------------------------
 
 IconBullet.propTypes = {
-  type: PropTypes.oneOf(['subheader', 'item'])
+  type: PropTypes.oneOf(["subheader", "item"]),
 };
 
-function IconBullet({ type = 'item' }) {
+function IconBullet({ type = "item" }) {
   return (
-    <Box sx={{ width: 24, height: 16, display: 'flex', alignItems: 'center' }}>
+    <Box sx={{ width: 24, height: 16, display: "flex", alignItems: "center" }}>
       <Box
         component="span"
         sx={{
-          ml: '2px',
+          ml: "2px",
           width: 4,
           height: 4,
-          borderRadius: '50%',
-          bgcolor: 'currentColor',
-          ...(type !== 'item' && { ml: 0, width: 8, height: 2, borderRadius: 2 })
+          borderRadius: "50%",
+          bgcolor: "currentColor",
+          ...(type !== "item" && {
+            ml: 0,
+            width: 8,
+            height: 2,
+            borderRadius: 2,
+          }),
         }}
       />
     </Box>
@@ -59,57 +73,71 @@ MenuDesktopItem.propTypes = {
   onClose: PropTypes.func,
 };
 
-function MenuDesktopItem({ item, pathname, name, isHome, isOpen, isOffset, onOpen, onClose }) {
-  const { title, path, children } = item;
+function MenuDesktopItem({
+  item,
+  pathname,
+  name,
+  isHome,
+  isOpen,
+  isOffset,
+  onOpen,
+  onClose,
+}) {
+  const { user } = useAuth();
+  const { title, path, children, role } = item;
   const isActive = pathname === path;
 
   const [anchorEl, setAnchorEl] = useState(null);
 
   if (children) {
     return (
-      <div key={title} >
+      <div key={title}>
         <LinkStyle
           onClick={(e) => {
-            setAnchorEl(e.currentTarget)
-            onOpen(path);            
+            setAnchorEl(e.currentTarget);
+            onOpen(path);
           }}
           sx={{
-            display: 'flex',
-            cursor: 'pointer',
-            alignItems: 'center',
+            display: "flex",
+            cursor: "pointer",
+            alignItems: "center",
             // ...(isHome && { color: 'common.white' }),
-            ...(isOffset && { color: 'text.primary' }),
-            ...(name === path && isOpen && { opacity: 0.48 })
+            ...(isOffset && { color: "text.primary" }),
+            ...(name === path && isOpen && { opacity: 0.48 }),
           }}
         >
           {title}
           <Box
             component={Icon}
-            icon={name === path &&isOpen ? arrowIosUpwardFill : arrowIosDownwardFill}
+            icon={
+              name === path && isOpen
+                ? arrowIosUpwardFill
+                : arrowIosDownwardFill
+            }
             sx={{ ml: 0.5, width: 16, height: 16 }}
           />
         </LinkStyle>
 
-        {name === path &&
+        {name === path && (
           <Menu
-            keepMounted 
-            id="simple-menu" 
+            keepMounted
+            id="simple-menu"
             anchorEl={anchorEl}
             open={isOpen}
             anchorReference="anchorEl"
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-            transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            transformOrigin={{ vertical: "top", horizontal: "center" }}
             onClose={onClose}
             PaperProps={{
               sx: {
                 px: 3,
                 pt: 2,
                 // pb: 3,
-                margin: 'auto',
+                margin: "auto",
                 maxWidth: 300,
                 borderRadius: 2,
-                boxShadow: (theme) => theme.customShadows.z24
-              }
+                boxShadow: (theme) => theme.customShadows.z24,
+              },
             }}
           >
             <Grid container spacing={3}>
@@ -118,24 +146,38 @@ function MenuDesktopItem({ item, pathname, name, isHome, isOpen, isOffset, onOpe
 
                 return (
                   <Grid key={subheader} item xs={12} md={12}>
-                    <List disablePadding>                    
+                    <List disablePadding>
                       {items.map((item) => (
                         <ListItem
                           key={item.title}
-                          to={item.path}
+                          to={
+                            item.role
+                              ? item.role === user.role
+                                ? item.path
+                                : "/"
+                              : item.path
+                          }
                           component={RouterLink}
                           underline="none"
+                          disabled={
+                            item.role
+                              ? item.role === user.role
+                                ? false
+                                : true
+                              : false
+                          }
                           sx={{
                             p: 0,
                             mb: 3,
-                            typography: 'body2',
-                            color: 'text.secondary',
-                            transition: (theme) => theme.transitions.create('color'),
-                            '&:hover': { color: 'text.primary' },
+                            typography: "body2",
+                            color: "text.secondary",
+                            transition: (theme) =>
+                              theme.transitions.create("color"),
+                            "&:hover": { color: "text.primary" },
                             ...(item.path === pathname && {
-                              typography: 'subtitle2',
-                              color: 'text.primary'
-                            })
+                              typography: "subtitle2",
+                              color: "text.primary",
+                            }),
                           }}
                         >
                           <IconBullet />
@@ -148,7 +190,7 @@ function MenuDesktopItem({ item, pathname, name, isHome, isOpen, isOffset, onOpe
               })}
             </Grid>
           </Menu>
-        }
+        )}
       </div>
     );
   }
@@ -156,12 +198,12 @@ function MenuDesktopItem({ item, pathname, name, isHome, isOpen, isOffset, onOpe
   return (
     <LinkStyle
       key={title}
-      to={path}
+      to={role ? (role === user.role ? path : "/") : path}
       component={RouterLink}
       sx={{
         // ...(isHome && { color: 'common.white' }),
-        ...(isOffset && { color: 'text.primary' }),
-        ...(isActive && { color: 'primary.main' })
+        ...(isOffset && { color: "text.primary" }),
+        ...(isActive && { color: "primary.main" }),
       }}
     >
       {title}
@@ -172,13 +214,13 @@ function MenuDesktopItem({ item, pathname, name, isHome, isOpen, isOffset, onOpe
 MenuDesktop.propTypes = {
   isOffset: PropTypes.bool,
   isHome: PropTypes.bool,
-  navConfig: PropTypes.array
+  navConfig: PropTypes.array,
 };
 
 export default function MenuDesktop({ isOffset, isHome, navConfig }) {
   const { pathname } = useLocation();
   const [open, setOpen] = useState(false);
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
 
   useEffect(() => {
     if (open) {

@@ -9,10 +9,6 @@ import { useParams, useLocation } from "react-router-dom";
 // redux
 import { useDispatch, useSelector } from "../redux/store";
 import { getProducts } from "../redux/slices/product";
-// routes
-import { PATH_DASHBOARD } from "../routes/paths";
-// components
-import HeaderBreadcrumbs from "../components/HeaderBreadcrumbs";
 import ProductNewForm from "../components/_external-pages/resume-upload/ProductNewForm";
 import { Container, Grid, Stack, Typography } from "@material-ui/core";
 

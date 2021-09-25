@@ -10,19 +10,15 @@ import {
   Stack,
   Typography,
 } from "@material-ui/core";
-// hooks
 import useOffSetTop from "../../hooks/useOffSetTop";
-// components
 import Logo from "../../components/Logo";
-import Label from "../../components/Label";
 import { MHidden } from "../../components/@material-extend";
-//
 import MenuDesktop from "./MenuDesktop";
 import MenuMobile from "./MenuMobile";
 import navConfig from "./MenuConfig";
 import { PATH_AUTH, PATH_PAGE } from "src/routes/paths";
-
-// ----------------------------------------------------------------------
+import useAuth from "../../hooks/useAuth";
+import AccountPopover from "../dashboard/AccountPopover";
 
 const APP_BAR_MOBILE = 64;
 const APP_BAR_DESKTOP = 88;
@@ -54,6 +50,7 @@ const ToolbarShadowStyle = styled("div")(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function MainNavbar() {
+  const auth = useAuth();
   const isOffset = useOffSetTop(100);
   const { pathname } = useLocation();
   const isHome = pathname === "/";
@@ -102,7 +99,7 @@ export default function MainNavbar() {
               <Stack spacing={0.5} direction="column" textAlign="center">
                 <Button
                   size="middle"
-                  to={PATH_AUTH.login}
+                  to={PATH_AUTH.employerLogin}
                   sx={{ borderRadius: 50 }}
                   color="secondary"
                   variant="outlined"
@@ -136,6 +133,13 @@ export default function MainNavbar() {
               navConfig={navConfig}
             />
           </MHidden>
+
+          <Box sx={{ flexGrow: 1 }} />
+          {auth.isAuthenticated && (
+            <Box sx={{ position: "absolute", right: 30 }}>
+              <AccountPopover />
+            </Box>
+          )}
         </Container>
       </ToolbarStyle>
 

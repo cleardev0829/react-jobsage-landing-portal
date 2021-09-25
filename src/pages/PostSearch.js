@@ -8,7 +8,7 @@ import Page from "../components/Page";
 import { PostItem1, SearchPanel } from "src/components/_external-pages/landing";
 import {
   KeywordTextFieldDesktop,
-  RegionTextFieldDesktop,
+  // RegionTextFieldDesktop,
 } from "src/components/_external-pages/landing/LandingHero";
 import { useParams } from "react-router-dom";
 
@@ -86,7 +86,7 @@ export default function PostSearch() {
           </Grid>
         </Grid>
         <Grid container xs={12}>
-          {routeParams.from === "candidate-sourcing" && (
+          {routeParams.from === "Employer" && (
             <Grid item xs={12} md={4} sx={{ pr: 1 }}>
               <SearchPanel {...data.item} />
             </Grid>
@@ -94,8 +94,8 @@ export default function PostSearch() {
           <Grid
             item
             xs={12}
-            md={routeParams.from === "candidate-sourcing" ? 8 : 12}
-            sx={{ pl: routeParams.from === "candidate-sourcing" ? 1 : 0 }}
+            md={routeParams.from === "Employer" ? 8 : 12}
+            sx={{ pl: routeParams.from === "Employer" ? 1 : 0 }}
           >
             <Grid item xs={12} sx={{ my: 1 }}>
               <TextField

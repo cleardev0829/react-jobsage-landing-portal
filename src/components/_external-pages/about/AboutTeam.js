@@ -1,33 +1,33 @@
-import faker from "faker";
+// import faker from "faker";
 import { useRef } from "react";
 import Slider from "react-slick";
 import PropTypes from "prop-types";
-import { Icon } from "@iconify/react";
-import twitterFill from "@iconify/icons-eva/twitter-fill";
-import linkedinFill from "@iconify/icons-eva/linkedin-fill";
-import facebookFill from "@iconify/icons-eva/facebook-fill";
-import roundArrowRightAlt from "@iconify/icons-ic/round-arrow-right-alt";
-import instagramFilled from "@iconify/icons-ant-design/instagram-filled";
+// import { Icon } from "@iconify/react";
+// import twitterFill from "@iconify/icons-eva/twitter-fill";
+// import linkedinFill from "@iconify/icons-eva/linkedin-fill";
+// import facebookFill from "@iconify/icons-eva/facebook-fill";
+// import roundArrowRightAlt from "@iconify/icons-ic/round-arrow-right-alt";
+// import instagramFilled from "@iconify/icons-ant-design/instagram-filled";
 // material
 import { useTheme } from "@material-ui/core/styles";
 import {
   Box,
   Card,
-  Button,
+  // Button,
   Container,
   Typography,
-  IconButton,
-  Divider,
+  // IconButton,
+  // Divider,
 } from "@material-ui/core";
 //
 import {
   varFadeIn,
   varFadeInUp,
   MotionInView,
-  varFadeInDown,
+  // varFadeInDown,
 } from "../../animate";
 import { CarouselControlsArrowsBasic2 } from "../../carousel";
-import { MHidden } from "../../@material-extend";
+// import { MHidden } from "../../@material-extend";
 
 // ----------------------------------------------------------------------
 

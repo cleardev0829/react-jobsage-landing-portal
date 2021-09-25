@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import SearchIcon from "@material-ui/icons/Search";
-import { Link, NavLink as RouterLink } from "react-router-dom";
+import { NavLink as RouterLink } from "react-router-dom";
 // material
 import { experimentalStyled as styled } from "@material-ui/core/styles";
 import { Box, Typography, Grid, TextField, Button } from "@material-ui/core";
@@ -11,11 +11,12 @@ import { alpha, makeStyles } from "@material-ui/core/styles";
 
 import { MHidden } from "../../@material-extend";
 import { PATH_PAGE } from "src/routes/paths";
+import useAuth from "src/hooks/useAuth";
 
 // ----------------------------------------------------------------------
 
 const RootStyle = styled(motion.div)(({ theme }) => ({
-  position: "relative",
+  // position: "relative",
   backgroundColor: theme.palette.grey[400],
   top: 0,
   left: 0,
@@ -180,6 +181,7 @@ const useStyles = makeStyles((theme) => ({
 // ----------------------------------------------------------------------
 
 export default function LandingHero() {
+  const { user, isAuthenticated } = useAuth();
   const classes = useStyles();
 
   return (
@@ -271,8 +273,13 @@ export default function LandingHero() {
                     size="large"
                     className={classes.buttonDesktop}
                     startIcon={<SearchIcon />}
-                    to={PATH_PAGE.postSearchHome}
+                    to={`${PATH_PAGE.postSearch}/${user.role}`}
                     component={RouterLink}
+                    disabled={
+                      isAuthenticated && user.role === "Candidate"
+                        ? false
+                        : true
+                    }
                   >
                     Search
                   </Button>

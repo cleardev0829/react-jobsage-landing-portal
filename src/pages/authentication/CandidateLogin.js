@@ -3,12 +3,12 @@ import { Link as RouterLink } from "react-router-dom";
 import { experimentalStyled as styled } from "@material-ui/core/styles";
 import {
   Box,
-  Card,
+  // Card,
   Paper,
   Stack,
   Link,
-  Alert,
-  Tooltip,
+  // Alert,
+  // Tooltip,
   Container,
   Typography,
   Button,
@@ -18,13 +18,13 @@ import { PATH_AUTH } from "../../routes/paths";
 // hooks
 import useAuth from "../../hooks/useAuth";
 // layouts
-import AuthLayout from "../../layouts/AuthLayout";
+// import AuthLayout from "../../layouts/AuthLayout";
 // components
 import Page from "../../components/Page";
-import { MHidden } from "../../components/@material-extend";
+// import { MHidden } from "../../components/@material-extend";
 import { CandidateLoginForm } from "../../components/authentication/login";
 import AuthFirebaseSocials from "../../components/authentication/AuthFirebaseSocial";
-import LogoOnlyLayout from "src/layouts/LogoOnlyLayout";
+// import LogoOnlyLayout from "src/layouts/LogoOnlyLayout";
 import Logo from "src/components/Logo";
 
 // ----------------------------------------------------------------------

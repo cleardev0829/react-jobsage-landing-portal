@@ -1,15 +1,15 @@
-import { useState } from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { useState } from "react";
+import { Navigate, useLocation } from "react-router-dom";
+import PropTypes from "prop-types";
 // hooks
-import useAuth from '../hooks/useAuth';
+import useAuth from "../hooks/useAuth";
 // pages
-import Login from '../pages/authentication/Login';
+import Login from "../pages/authentication/EmployerLogin";
 
 // ----------------------------------------------------------------------
 
 AuthGuard.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
 };
 
 export default function AuthGuard({ children }) {

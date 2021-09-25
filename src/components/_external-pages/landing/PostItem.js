@@ -12,7 +12,7 @@ import {
   Divider,
   ListItem,
 } from "@material-ui/core";
-import { Link, NavLink as RouterLink } from "react-router-dom";
+import { NavLink as RouterLink } from "react-router-dom";
 import { varFadeInUp, MotionInView } from "../../animate";
 import { MHidden } from "../../@material-extend";
 
@@ -121,24 +121,26 @@ export default function PostItem(props) {
                 )}
               </MotionInView>
               {description.map((item, index) => (
-                <MotionInView variants={varFadeInUp}>
+                <MotionInView key={`motion-${index}`} variants={varFadeInUp}>
                   <Typography
+                    key={`typograpy-${index}`}
                     sx={{
                       mb: 4,
                       color: isLight ? "text.secondary" : "common.white",
                     }}
                   >
                     {item.prefix && (
-                      <>
-                        <span style={{ fontWeight: "bold" }}>
-                          {item.prefix}
-                        </span>
-                      </>
+                      <span
+                        key={`span-${index}`}
+                        style={{ fontWeight: "bold" }}
+                      >
+                        {item.prefix}
+                      </span>
                     )}
                     {item.iconBullet ? (
-                      <Grid key={index} item xs={12} md={12}>
-                        <ListItem>
-                          <IconBullet />
+                      <Grid key={`grid-${index}`} item xs={12} md={12}>
+                        <ListItem key={`listitem-${index}`}>
+                          <IconBullet key={`iconbullet-${index}`} />
                           {item.suffix}
                         </ListItem>
                       </Grid>
@@ -170,7 +172,7 @@ export default function PostItem(props) {
                   <Button
                     size="middle"
                     color="primary"
-                    target='_blank'
+                    target="_blank"
                     variant="contained"
                     sx={{ borderRadius: 50 }}
                     href={link}

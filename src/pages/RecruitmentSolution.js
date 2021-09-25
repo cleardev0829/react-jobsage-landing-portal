@@ -1,14 +1,14 @@
 // material
 import { experimentalStyled as styled } from "@material-ui/core/styles";
-import { Divider } from "@material-ui/core";
+// import { Divider } from "@material-ui/core";
 // components
 import Page from "../components/Page";
 import {
-  AboutHero,
-  AboutWhat,
-  AboutTeam,
-  AboutVision,
-  AboutTestimonials,
+  // AboutHero,
+  // AboutWhat,
+  // AboutTeam,
+  // AboutVision,
+  // AboutTestimonials,
   ContactUs,
 } from "../components/_external-pages/about";
 import { PostItem } from "src/components/_external-pages/landing";
@@ -110,7 +110,7 @@ export default function RecruitmentSolution() {
       <PostItem {...data.talent} />
       <PostItem {...data.candidate} />
       <PostItem {...data.reports} />
-      <PostItem {...data.engagement} />      
+      <PostItem {...data.engagement} />
       <ContactUs />
     </RootStyle>
   );

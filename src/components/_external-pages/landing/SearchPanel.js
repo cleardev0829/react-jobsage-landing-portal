@@ -1,6 +1,6 @@
-import { useState } from "react";
+// import { useState } from "react";
 import {
-  useTheme,
+  // useTheme,
   experimentalStyled as styled,
 } from "@material-ui/core/styles";
 import {
@@ -11,7 +11,7 @@ import {
   FormControlLabel,
   Checkbox,
   TextField,
-  Slider,
+  // Slider,
 } from "@material-ui/core";
 import { varFadeInUp, MotionInView } from "../../animate";
 
@@ -32,11 +32,11 @@ const ContentStyle = styled("div")(({ theme }) => ({
 }));
 
 export default function SearchPanel(props) {
-  const [value, setValue] = useState(30);
+  // const [value, setValue] = useState(30);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  // const handleChange = (event, newValue) => {
+  //   setValue(newValue);
+  // };
 
   return (
     <RootStyle>

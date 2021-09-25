@@ -3,7 +3,7 @@ import { experimentalStyled as styled } from "@material-ui/core/styles";
 // components
 import Page from "../components/Page";
 // components
-import { Container, Grid, Stack } from "@material-ui/core";
+import { Container, Grid } from "@material-ui/core";
 import PrivacyPolicyHtml from "src/components/_external-pages/privacy-policy/PrivacyPolicyHtml";
 
 const RootStyle = styled(Page)(({ theme }) => ({

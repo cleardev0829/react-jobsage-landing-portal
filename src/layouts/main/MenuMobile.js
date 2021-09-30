@@ -26,7 +26,6 @@ import Scrollbar from "../../components/Scrollbar";
 import { MIconButton } from "../../components/@material-extend";
 //
 import menuConfig from "./MenuConfig";
-import useAuth from "../../hooks/useAuth";
 
 // ----------------------------------------------------------------------
 
@@ -54,8 +53,7 @@ MenuMobileItem.propTypes = {
 };
 
 function MenuMobileItem({ item, name, isOpen, isActive, onOpen }) {
-  const { user } = useAuth();
-  const { title, path, icon, children, role } = item;
+  const { title, path, icon, children } = item;
 
   if (children) {
     return (
@@ -136,7 +134,7 @@ function MenuMobileItem({ item, name, isOpen, isActive, onOpen }) {
     <ListItemStyle
       button
       key={title}
-      to={role ? (role === user.role ? path : "/") : path}
+      to={path}
       component={RouterLink}
       sx={{
         ...(isActive && {

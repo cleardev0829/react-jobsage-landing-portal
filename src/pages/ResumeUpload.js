@@ -64,9 +64,14 @@ export default function ResumeUpload() {
                 justifyContent="center"
                 sx={{ mb: 6 }}
               >
-                <Typography variant="h3" color="primary" gutterBottom>
-                  Upload your Resume
-                </Typography>
+                <Stack direction="column" textAlign="center">
+                  <Typography variant="h3" color="primary" gutterBottom>
+                    Resume Parsing software
+                  </Typography>
+                  <Typography variant="subtitle1" color="primary" gutterBottom>
+                    upload your resume (PDF or Word) for resume parsing
+                  </Typography>
+                </Stack>
               </Grid>
               <ProductNewForm isEdit={isEdit} currentProduct={currentProduct} />
             </Stack>

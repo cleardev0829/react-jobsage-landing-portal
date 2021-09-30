@@ -16,7 +16,6 @@ import {
   ListItem,
   Menu,
 } from "@material-ui/core";
-import useAuth from "../../hooks/useAuth";
 
 // ----------------------------------------------------------------------
 
@@ -83,8 +82,7 @@ function MenuDesktopItem({
   onOpen,
   onClose,
 }) {
-  const { user } = useAuth();
-  const { title, path, children, role } = item;
+  const { title, path, children } = item;
   const isActive = pathname === path;
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -150,22 +148,9 @@ function MenuDesktopItem({
                       {items.map((item) => (
                         <ListItem
                           key={item.title}
-                          to={
-                            item.role
-                              ? item.role === user.role
-                                ? item.path
-                                : "/"
-                              : item.path
-                          }
+                          to={item.path}
                           component={RouterLink}
                           underline="none"
-                          disabled={
-                            item.role
-                              ? item.role === user.role
-                                ? false
-                                : true
-                              : false
-                          }
                           sx={{
                             p: 0,
                             mb: 3,
@@ -198,10 +183,10 @@ function MenuDesktopItem({
   return (
     <LinkStyle
       key={title}
-      to={role ? (role === user.role ? path : "/") : path}
+      to={path}
       component={RouterLink}
       sx={{
-        // ...(isHome && { color: 'common.white' }),
+        ...(isHome && { color: "common.primary" }),
         ...(isOffset && { color: "text.primary" }),
         ...(isActive && { color: "primary.main" }),
       }}

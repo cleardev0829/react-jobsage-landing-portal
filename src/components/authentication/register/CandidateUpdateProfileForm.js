@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Icon } from "@iconify/react";
 import { useSnackbar } from "notistack";
 import { useFormik, Form, FormikProvider } from "formik";
@@ -23,6 +23,7 @@ import useIsMountedRef from "../../../hooks/useIsMountedRef";
 //
 import { MIconButton } from "../../@material-extend";
 import countries from "./countries";
+import { UploadResumeFile } from "src/components/upload";
 
 // ----------------------------------------------------------------------
 
@@ -31,6 +32,7 @@ export default function CandidateUpdateProfileForm() {
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [showPassword, setShowPassword] = useState(false);
+  const [file, setFile] = useState(null);
 
   const RegisterSchema = Yup.object().shape({
     fullname: Yup.string()
@@ -65,7 +67,9 @@ export default function CandidateUpdateProfileForm() {
           phoneNumber: values.phoneNumber,
           country: values.country,
           job: values.job,
+          resume: file,
         });
+
         enqueueSnackbar("Update success", {
           variant: "success",
           action: (key) => (
@@ -74,6 +78,7 @@ export default function CandidateUpdateProfileForm() {
             </MIconButton>
           ),
         });
+
         if (isMountedRef.current) {
           setSubmitting(false);
         }
@@ -88,6 +93,16 @@ export default function CandidateUpdateProfileForm() {
   });
 
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
+
+  const handleDropSingleFile = useCallback((acceptedFiles) => {
+    const file = acceptedFiles[0];
+    if (file) {
+      setFile({
+        ...file,
+        preview: URL.createObjectURL(file),
+      });
+    }
+  }, []);
 
   return (
     <FormikProvider value={formik}>
@@ -200,6 +215,8 @@ export default function CandidateUpdateProfileForm() {
             helperText={touched.job && errors.job}
             required
           />
+
+          <UploadResumeFile file={file} onDrop={handleDropSingleFile} />
 
           <LoadingButton
             fullWidth

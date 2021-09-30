@@ -101,7 +101,7 @@ export default function EmployerLogin() {
                 variant="contained"
                 onClick={handleLoginAuth0}
               >
-                Login
+                Login with Employer
               </Button>
             )}
 

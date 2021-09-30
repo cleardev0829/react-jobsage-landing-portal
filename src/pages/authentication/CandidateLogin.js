@@ -101,7 +101,7 @@ export default function CandidateLogin() {
                 variant="contained"
                 onClick={handleLoginAuth0}
               >
-                Login
+                Login with Candidate
               </Button>
             )}
 

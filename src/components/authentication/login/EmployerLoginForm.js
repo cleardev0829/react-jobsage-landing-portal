@@ -1,11 +1,11 @@
 import * as Yup from "yup";
 import { useState } from "react";
-import { useSnackbar } from "notistack";
+// import { useSnackbar } from "notistack";
 // import { Link as RouterLink } from "react-router-dom";
 import { useFormik, Form, FormikProvider } from "formik";
 import { Icon } from "@iconify/react";
 import eyeFill from "@iconify/icons-eva/eye-fill";
-import closeFill from "@iconify/icons-eva/close-fill";
+// import closeFill from "@iconify/icons-eva/close-fill";
 import eyeOffFill from "@iconify/icons-eva/eye-off-fill";
 // material
 import {
@@ -25,14 +25,14 @@ import { LoadingButton } from "@material-ui/lab";
 import useAuth from "../../../hooks/useAuth";
 import useIsMountedRef from "../../../hooks/useIsMountedRef";
 //
-import { MIconButton } from "../../@material-extend";
+// import { MIconButton } from "../../@material-extend";
 
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
   const { login } = useAuth();
   const isMountedRef = useIsMountedRef();
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  // const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [showPassword, setShowPassword] = useState(false);
 
   const LoginSchema = Yup.object().shape({
@@ -51,15 +51,17 @@ export default function LoginForm() {
     validationSchema: LoginSchema,
     onSubmit: async (values, { setErrors, setSubmitting, resetForm }) => {
       try {
-        await login(values.email, values.password);
-        enqueueSnackbar("Login success", {
-          variant: "success",
-          action: (key) => (
-            <MIconButton size="small" onClick={() => closeSnackbar(key)}>
-              <Icon icon={closeFill} />
-            </MIconButton>
-          ),
-        });
+        await login(values.email, values.password, "Employer");
+
+        // enqueueSnackbar("Login success", {
+        //   variant: "success",
+        //   action: (key) => (
+        //     <MIconButton size="small" onClick={() => closeSnackbar(key)}>
+        //       <Icon icon={closeFill} />
+        //     </MIconButton>
+        //   ),
+        // });
+
         if (isMountedRef.current) {
           setSubmitting(false);
         }
@@ -132,7 +134,7 @@ export default function LoginForm() {
             loading={isSubmitting}
             sx={{ mt: 2 }}
           >
-            Login
+            Login with Employer
           </LoadingButton>
         </Stack>
       </Form>

@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Icon } from "@iconify/react";
 import { useSnackbar } from "notistack";
 import { useFormik, Form, FormikProvider } from "formik";
@@ -23,6 +23,7 @@ import useIsMountedRef from "../../../hooks/useIsMountedRef";
 //
 import { MIconButton } from "../../@material-extend";
 import countries from "./countries";
+import { UploadResumeFile } from "src/components/upload";
 
 // ----------------------------------------------------------------------
 
@@ -31,6 +32,7 @@ export default function RegisterForm() {
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [showPassword, setShowPassword] = useState(false);
+  const [file, setFile] = useState(null);
 
   const RegisterSchema = Yup.object().shape({
     fullname: Yup.string()
@@ -64,7 +66,8 @@ export default function RegisterForm() {
           values.password,
           values.phoneNumber,
           values.country,
-          values.job
+          values.job,
+          file
         );
         enqueueSnackbar("Register success", {
           variant: "success",
@@ -88,6 +91,16 @@ export default function RegisterForm() {
   });
 
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
+
+  const handleDropSingleFile = useCallback((acceptedFiles) => {
+    const file = acceptedFiles[0];
+    if (file) {
+      setFile({
+        ...file,
+        preview: URL.createObjectURL(file),
+      });
+    }
+  }, []);
 
   return (
     <FormikProvider value={formik}>
@@ -200,6 +213,8 @@ export default function RegisterForm() {
             helperText={touched.job && errors.job}
             required
           />
+
+          <UploadResumeFile file={file} onDrop={handleDropSingleFile} />
 
           <LoadingButton
             fullWidth

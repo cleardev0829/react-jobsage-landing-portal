@@ -6,6 +6,8 @@ import LogoOnlyLayout from "../layouts/LogoOnlyLayout";
 // guards
 import GuestGuard from "../guards/GuestGuard";
 import LoadingScreen from "../components/LoadingScreen";
+// import AuthGuard from "src/guards/AuthGuard";
+import RoleBasedGuard from "src/guards/RoleBasedGuard";
 
 const Loadable = (Component) => (props) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -106,17 +108,46 @@ export default function Router() {
         { path: "demo", element: <Demo /> },
         { path: "about-us", element: <About /> },
         { path: "blog", element: <Blog /> },
-        { path: "resume-builder", element: <ResumeBuilder /> },
-        { path: "resume-parsing", element: <ResumeParsing /> },
+        {
+          path: "resume-builder",
+          element: (
+            <RoleBasedGuard accessibleRoles={["Candidate"]}>
+              <ResumeBuilder />
+            </RoleBasedGuard>
+          ),
+        },
+
         { path: "resume-upload", element: <ResumeUpload /> },
         { path: "contact-us", element: <Contact /> },
         { path: "privacy-policy", element: <PrivacyPolicy /> },
         { path: "terms-conditions", element: <TermsConditions /> },
         { path: "recruitment-solution", element: <RecruitmentSolution /> },
-        { path: "candidate-sourcing", element: <CandidateSourcing /> },
         { path: "post-search/:from", element: <PostSearch /> },
-        { path: "rekommendation", element: <Rekommendation /> },
         { path: "faqs", element: <Faqs /> },
+        {
+          path: "resume-parsing",
+          element: (
+            <RoleBasedGuard accessibleRoles={["Employer"]}>
+              <ResumeParsing />
+            </RoleBasedGuard>
+          ),
+        },
+        {
+          path: "candidate-sourcing",
+          element: (
+            <RoleBasedGuard accessibleRoles={["Employer"]}>
+              <CandidateSourcing />
+            </RoleBasedGuard>
+          ),
+        },
+        {
+          path: "rekommendation",
+          element: (
+            <RoleBasedGuard accessibleRoles={["Employer"]}>
+              <Rekommendation />
+            </RoleBasedGuard>
+          ),
+        },
       ],
     },
     { path: "*", element: <Navigate to="/404" replace /> },

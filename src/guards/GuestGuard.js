@@ -9,13 +9,10 @@ GuestGuard.propTypes = {
 
 export default function GuestGuard({ children }) {
   const { isAuthenticated, user } = useAuth();
+  console.log(isAuthenticated, user);
 
   if (isAuthenticated) {
-    return (
-      <Navigate
-        to={isAuthenticated ? `${PATH_PAGE.postSearch}/${user.role}` : "/"}
-      />
-    );
+    return <Navigate to={`${PATH_PAGE.postSearch}/${user.role}`} />;
   }
 
   return <>{children}</>;

@@ -60,6 +60,7 @@ export default function EmployerRegisterForm() {
           values.orgName,
           values.contactName
         );
+
         enqueueSnackbar("Register success", {
           variant: "success",
           action: (key) => (
@@ -68,6 +69,7 @@ export default function EmployerRegisterForm() {
             </MIconButton>
           ),
         });
+
         if (isMountedRef.current) {
           setSubmitting(false);
         }

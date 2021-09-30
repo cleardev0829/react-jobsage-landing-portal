@@ -16,7 +16,7 @@ import {
   Box,
 } from "@material-ui/core";
 import fakeRequest from "../../../utils/fakeRequest";
-// import { PATH_DASHBOARD } from "../../../routes/paths";
+import { PATH_PAGE } from "../../../routes/paths";
 import { UploadMultiFile } from "../../upload";
 
 const LabelStyle = styled(Typography)(({ theme }) => ({
@@ -37,7 +37,6 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
   const NewProductSchema = Yup.object().shape({
     name: Yup.string().required("Name is required"),
     email: Yup.string().required("Email is required").email(),
-    phoneNumber: Yup.string().required("Phone number is required"),
     images: Yup.array().min(1, "Files is required"),
   });
 
@@ -46,7 +45,6 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
     initialValues: {
       name: currentProduct?.name || "",
       email: currentProduct?.email || "",
-      phoneNumber: currentProduct?.phoneNumber || "",
       images: currentProduct?.images || [],
     },
     validationSchema: NewProductSchema,
@@ -58,7 +56,7 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
         enqueueSnackbar(!isEdit ? "Create success" : "Update success", {
           variant: "success",
         });
-        // navigate(PATH_DASHBOARD.eCommerce.list);
+        navigate(PATH_PAGE.demo);
       } catch (error) {
         console.error(error);
         setSubmitting(false);
@@ -107,7 +105,6 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
           <Grid item xs={12} md={12}>
             <Card sx={{ p: 3 }}>
               <Stack spacing={3}>
-                {/* <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 3, sm: 2 }}> */}
                 <TextField
                   fullWidth
                   label="Full Name"
@@ -121,15 +118,6 @@ export default function ProductNewForm({ isEdit, currentProduct }) {
                   {...getFieldProps("email")}
                   error={Boolean(touched.email && errors.email)}
                   helperText={touched.email && errors.email}
-                />
-                {/* </Stack> */}
-
-                <TextField
-                  fullWidth
-                  label="Phone Number"
-                  {...getFieldProps("phoneNumber")}
-                  error={Boolean(touched.phoneNumber && errors.phoneNumber)}
-                  helperText={touched.phoneNumber && errors.phoneNumber}
                 />
 
                 <div>

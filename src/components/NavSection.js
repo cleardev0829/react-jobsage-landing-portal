@@ -23,7 +23,6 @@ import {
   ListItemIcon,
   ListSubheader,
 } from "@material-ui/core";
-import useAuth from "../hooks/useAuth";
 
 // ----------------------------------------------------------------------
 
@@ -77,10 +76,9 @@ NavItem.propTypes = {
 };
 
 function NavItem({ item, active }) {
-  const { user } = useAuth();
   const theme = useTheme();
   const isActiveRoot = active(item.path);
-  const { title, path, icon, info, children, role } = item;
+  const { title, path, icon, info, children } = item;
   const [open, setOpen] = useState(isActiveRoot);
 
   const handleOpen = () => {
@@ -169,7 +167,7 @@ function NavItem({ item, active }) {
   return (
     <ListItemStyle
       component={RouterLink}
-      to={role ? (role === user.role ? path : "/") : path}
+      to={path}
       sx={{
         ...(isActiveRoot && activeRootStyle),
       }}

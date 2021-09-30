@@ -1,30 +1,38 @@
 import PropTypes from "prop-types";
 import { Container, Alert, AlertTitle } from "@material-ui/core";
+import useAuth from "../hooks/useAuth";
+import { experimentalStyled as styled } from "@material-ui/core/styles";
 
 // ----------------------------------------------------------------------
 
 RoleBasedGuard.propTypes = {
-  accessibleRoles: PropTypes.array, // Example ['admin', 'leader']
+  accessibleRoles: PropTypes.array,
   children: PropTypes.node,
 };
 
-const useCurrentRole = () => {
-  // Logic here to get current user role
-  const role = "admin";
-  return role;
-};
+const RootStyle = styled(Container)(({ theme }) => ({
+  padding: theme.spacing(12, 0),
+  [theme.breakpoints.up("md")]: {
+    padding: theme.spacing(16),
+  },
+}));
 
 export default function RoleBasedGuard({ accessibleRoles, children }) {
-  const currentRole = useCurrentRole();
+  const { isAuthenticated, user } = useAuth();
+  const currentRole = user.role;
+  const accesibleRole = accessibleRoles[0];
 
-  if (!accessibleRoles.includes(currentRole)) {
+  if (
+    !isAuthenticated ||
+    (isAuthenticated && !accessibleRoles.includes(currentRole))
+  ) {
     return (
-      <Container>
+      <RootStyle>
         <Alert severity="error">
           <AlertTitle>Permission Denied</AlertTitle>
-          You do not have permission to access this page
+          {`You do not have permission to access this page. please login with ${accesibleRole}`}
         </Alert>
-      </Container>
+      </RootStyle>
     );
   }
 

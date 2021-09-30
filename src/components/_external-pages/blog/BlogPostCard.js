@@ -1,18 +1,21 @@
 import PropTypes from "prop-types";
 import { Icon } from "@iconify/react";
-import { paramCase } from "change-case";
+// import { paramCase } from "change-case";
 import eyeFill from "@iconify/icons-eva/eye-fill";
-import { Link as RouterLink } from "react-router-dom";
+// import { Link as RouterLink } from "react-router-dom";
 import shareFill from "@iconify/icons-eva/share-fill";
 import messageCircleFill from "@iconify/icons-eva/message-circle-fill";
 // material
-import { alpha, experimentalStyled as styled } from "@material-ui/core/styles";
+import {
+  // alpha,
+  experimentalStyled as styled,
+} from "@material-ui/core/styles";
 import {
   Box,
   Link,
   Card,
   Grid,
-  Avatar,
+  // Avatar,
   Typography,
   CardContent,
 } from "@material-ui/core";
@@ -39,14 +42,14 @@ const TitleStyle = styled(Link)({
   WebkitBoxOrient: "vertical",
 });
 
-const AvatarStyle = styled(Avatar)(({ theme }) => ({
-  zIndex: 9,
-  width: 32,
-  height: 32,
-  position: "absolute",
-  left: theme.spacing(3),
-  bottom: theme.spacing(-2),
-}));
+// const AvatarStyle = styled(Avatar)(({ theme }) => ({
+//   zIndex: 9,
+//   width: 32,
+//   height: 32,
+//   position: "absolute",
+//   left: theme.spacing(3),
+//   bottom: theme.spacing(-2),
+// }));
 
 const InfoStyle = styled("div")(({ theme }) => ({
   display: "flex",
@@ -78,7 +81,7 @@ export default function BlogPostCard({ post, index }) {
     view,
     comment,
     share,
-    author,
+    // author,
     createdAt,
     pdfUrl,
   } = post;

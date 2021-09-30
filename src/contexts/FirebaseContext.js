@@ -6,6 +6,7 @@ import "firebase/firestore";
 import "firebase/storage";
 import { firebaseConfig } from "../config";
 import _ from "lodash";
+import { PATH_AUTH } from "src/routes/paths";
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
@@ -48,6 +49,7 @@ const AuthContext = createContext({
   loginWithTwitter: () => Promise.resolve(),
   logout: () => Promise.resolve(),
   updateProfile: () => Promise.resolve(),
+  sendEmailVerification: () => Promise.resolve(),
   createUserOnRealTimeDB: () => Promise.resolve(),
   updateSubscriptionKey: () => Promise.resolve(),
 });
@@ -63,7 +65,7 @@ function AuthProvider({ children }) {
   useEffect(
     () =>
       firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
+        if (user && user.emailVerified) {
           const docRef = firebase.firestore().collection("users").doc(user.uid);
           const subscriptionRef = firebase
             .firestore()
@@ -98,6 +100,7 @@ function AuthProvider({ children }) {
             payload: {
               isAuthenticated: false,
               isSubscription: false,
+              isEmailVerified: false,
               user: null,
             },
           });
@@ -106,8 +109,34 @@ function AuthProvider({ children }) {
     [dispatch]
   );
 
-  const login = (email, password) => {
-    return firebase.auth().signInWithEmailAndPassword(email, password);
+  const login = (email, password, role) => {
+    const docRef = firebase
+      .firestore()
+      .collection("users")
+      .where("email", "==", email)
+      .where("role", "==", role);
+
+    return new Promise((resolve, reject) => {
+      docRef.get().then((snapshot) => {
+        if (snapshot.docs.length > 0) {
+          resolve(
+            firebase
+              .auth()
+              .signInWithEmailAndPassword(email, password)
+              .then((authUser) => {
+                if (!authUser.user.emailVerified) {
+                  document.location.href = PATH_AUTH.verify;
+                }
+              })
+          );
+        } else {
+          reject({
+            message:
+              "There is no user record corresponding to this identifier. The user may have been deleted.",
+          });
+        }
+      });
+    });
   };
 
   const loginWithGoogle = () => {
@@ -130,14 +159,19 @@ function AuthProvider({ children }) {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((res) => {
-        firebase.firestore().collection("users").doc(res.user.uid).set({
-          uid: res.user.uid,
-          email,
-          orgName,
-          contactName,
-          displayName: `Employer`,
-          role: "Employer",
-        });
+        firebase
+          .firestore()
+          .collection("users")
+          .doc(res.user.uid)
+          .set({
+            uid: res.user.uid,
+            email,
+            orgName,
+            contactName,
+            displayName: `Employer`,
+            role: "Employer",
+          })
+          .then(() => sendEmailVerification());
       });
   };
 
@@ -147,22 +181,61 @@ function AuthProvider({ children }) {
     password,
     phoneNumber,
     country,
-    job
+    job,
+    resume
   ) => {
+    if (resume && resume.preview) {
+      getFileBlob(resume.preview, (blob) => {
+        return firebase
+          .storage()
+          .ref(`/resume/${resume.path}`)
+          .put(blob)
+          .then((snapshot) => {
+            snapshot.ref.getDownloadURL().then((url) => {
+              firebase
+                .auth()
+                .createUserWithEmailAndPassword(email, password)
+                .then((res) => {
+                  firebase
+                    .firestore()
+                    .collection("users")
+                    .doc(res.user.uid)
+                    .set({
+                      uid: res.user.uid,
+                      email,
+                      fullname,
+                      phoneNumber,
+                      country,
+                      job,
+                      displayName: `Candidate`,
+                      role: "Candidate",
+                      resume: url,
+                    })
+                    .then(() => sendEmailVerification());
+                });
+            });
+          });
+      });
+    }
     return firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((res) => {
-        firebase.firestore().collection("users").doc(res.user.uid).set({
-          uid: res.user.uid,
-          email,
-          fullname,
-          phoneNumber,
-          country,
-          job,
-          displayName: `Candidate`,
-          role: "Candidate",
-        });
+        firebase
+          .firestore()
+          .collection("users")
+          .doc(res.user.uid)
+          .set({
+            uid: res.user.uid,
+            email,
+            fullname,
+            phoneNumber,
+            country,
+            job,
+            displayName: `Candidate`,
+            role: "Candidate",
+          })
+          .then(() => sendEmailVerification());
       });
   };
 
@@ -173,6 +246,18 @@ function AuthProvider({ children }) {
 
   const resetPassword = async (email) => {
     await firebase.auth().sendPasswordResetEmail(email);
+  };
+
+  const sendEmailVerification = () => {
+    return firebase
+      .auth()
+      .currentUser.sendEmailVerification()
+      .then(() => {
+        firebase
+          .auth()
+          .signOut()
+          .then(() => (document.location.href = PATH_AUTH.verify));
+      });
   };
 
   const auth = { ...state.user };
@@ -212,7 +297,7 @@ function AuthProvider({ children }) {
       getFileBlob(data.photoURL.preview, (blob) => {
         firebase
           .storage()
-          .ref(`/photo/${auth.uid}/${data.photoURL.path}`)
+          .ref(`/resume/${auth.uid}/${data.photoURL.path}`)
           .put(blob)
           .then((snapshot) => {
             snapshot.ref.getDownloadURL().then((url) => {
@@ -239,7 +324,6 @@ function AuthProvider({ children }) {
   };
 
   const candidateUpdateProfile = async (data) => {
-    console.log(data);
     const docRef = firebase.firestore().collection("users").doc(auth.uid);
     if (!(await docRef.get()).data()) {
       await docRef.set({
@@ -253,11 +337,11 @@ function AuthProvider({ children }) {
       country: data.country,
       job: data.job,
     });
-    if (data.photoURL && data.photoURL.preview) {
-      getFileBlob(data.photoURL.preview, (blob) => {
+    if (data.resume && data.resume.preview) {
+      getFileBlob(data.resume.preview, (blob) => {
         firebase
           .storage()
-          .ref(`/photo/${auth.uid}/${data.photoURL.path}`)
+          .ref(`/resume/${auth.uid}/${data.resume.path}`)
           .put(blob)
           .then((snapshot) => {
             snapshot.ref.getDownloadURL().then((url) => {
@@ -267,9 +351,10 @@ function AuthProvider({ children }) {
                 phoneNumber: data.phoneNumber,
                 country: data.country,
                 job: data.job,
+                resume: url,
               });
               docRef.update({
-                photoURL: url,
+                resume: url,
               });
             });
           });
@@ -285,6 +370,7 @@ function AuthProvider({ children }) {
     }
     return;
   };
+
   const getFileBlob = (url, cb) => {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url);
@@ -323,6 +409,7 @@ function AuthProvider({ children }) {
         loginWithTwitter,
         logout,
         resetPassword,
+        sendEmailVerification,
         createUserOnRealTimeDB,
         updateSubscriptionKey,
       }}

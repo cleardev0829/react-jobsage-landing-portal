@@ -85,7 +85,7 @@ export default function PostSearch() {
             </Grid>
           </Grid>
         </Grid>
-        <Grid container xs={12}>
+        <Grid container maxWidth="lg">
           {routeParams.from === "Employer" && (
             <Grid item xs={12} md={4} sx={{ pr: 1 }}>
               <SearchPanel {...data.item} />

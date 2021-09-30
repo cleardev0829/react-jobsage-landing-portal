@@ -15,7 +15,7 @@ import {
   Divider,
   Container,
   Typography,
-  IconButton,
+  // IconButton,
   Stack,
   TextField,
 } from "@material-ui/core";
@@ -28,11 +28,31 @@ import Logo from "../../components/Logo";
 // ----------------------------------------------------------------------
 
 const SOCIALS = [
-  { name: "FaceBook", icon: facebookFill },
-  { name: "Google", icon: googleFill },
-  { name: "Linkedin", icon: linkedinFill },
-  { name: "Instagram", icon: instagramFilled },
-  { name: "Twitter", icon: twitterFill },
+  {
+    name: "FaceBook",
+    icon: facebookFill,
+    link: "https://www.facebook.com/Irekommendai",
+  },
+  {
+    name: "Google",
+    icon: googleFill,
+    link: "https://www.google.com/company/irekommend/",
+  },
+  {
+    name: "Linkedin",
+    icon: linkedinFill,
+    link: "https://www.linkedin.com/company/irekommend/",
+  },
+  {
+    name: "Instagram",
+    icon: instagramFilled,
+    link: "https://www.instagram.com/irekommend_ai/",
+  },
+  {
+    name: "Twitter",
+    icon: twitterFill,
+    link: "https://twitter.com/iRekommend",
+  },
 ];
 
 const LINKS = [
@@ -209,9 +229,16 @@ export default function MainFooter() {
               sx={{ mt: 5, mb: { xs: 5, md: 0 } }}
             >
               {SOCIALS.map((social) => (
-                <IconButton key={social.name} color="secondary" sx={{ p: 1 }}>
+                <Link
+                  key={social.name}
+                  target="_blank"
+                  href={social.link}
+                  color="secondary"
+                  variant="body2"
+                  sx={{ display: "block", textAlign: "center", px: 0.5 }}
+                >
                   <Icon icon={social.icon} width={16} height={16} />
-                </IconButton>
+                </Link>
               ))}
             </Stack>
           </Grid>

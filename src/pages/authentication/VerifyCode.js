@@ -1,16 +1,24 @@
 import { Icon } from "@iconify/react";
-import { Link as RouterLink } from "react-router-dom";
+// import { Link as RouterLink } from "react-router-dom";
 import arrowIosBackFill from "@iconify/icons-eva/arrow-ios-back-fill";
 // material
 import { experimentalStyled as styled } from "@material-ui/core/styles";
-import { Box, Button, Link, Container, Typography } from "@material-ui/core";
+import {
+  Box,
+  Button,
+  // Link,
+  Container,
+  Typography,
+} from "@material-ui/core";
 // layouts
 import LogoOnlyLayout from "../../layouts/LogoOnlyLayout";
 // routes
-import { PATH_AUTH } from "../../routes/paths";
+// import { PATH_AUTH } from "../../routes/paths";
 // components
 import Page from "../../components/Page";
-import { VerifyCodeForm } from "../../components/authentication/verify-code";
+// import { VerifyCodeForm } from "../../components/authentication/verify-code";
+// hooks
+// import useAuth from "../../hooks/useAuth";
 
 // ----------------------------------------------------------------------
 
@@ -24,6 +32,8 @@ const RootStyle = styled(Page)(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function VerifyCode() {
+  // const { sendEmailVerification } = useAuth();
+
   return (
     <RootStyle title="Verify | Minimal UI">
       <LogoOnlyLayout />
@@ -32,10 +42,11 @@ export default function VerifyCode() {
         <Box sx={{ maxWidth: 480, mx: "auto" }}>
           <Button
             size="small"
-            component={RouterLink}
-            to={PATH_AUTH.employerLogin}
+            // component={RouterLink}
+            // to={PATH_AUTH.employerLogin}
             startIcon={<Icon icon={arrowIosBackFill} width={20} height={20} />}
             sx={{ mb: 3 }}
+            onClick={() => window.history.back()}
           >
             Back
           </Button>
@@ -44,20 +55,27 @@ export default function VerifyCode() {
             Please check your email!
           </Typography>
           <Typography sx={{ color: "text.secondary" }}>
-            We have emailed a 6-digit confirmation code to acb@domain, please
-            enter the code in below box to verify your email.
+            {/* We have emailed a 6-digit confirmation code to acb@domain, please
+            enter the code in below box to verify your email. */}
+            Verify your E-Mail: Check you E-Mails (Spam folder included) for a
+            confirmation E-Mail or send another confirmation E-Mail.
           </Typography>
 
-          <Box sx={{ mt: 5, mb: 3 }}>
-            <VerifyCodeForm />
-          </Box>
+          <Box sx={{ mt: 5, mb: 3 }}>{/* <VerifyCodeForm /> */}</Box>
 
-          <Typography variant="body2" align="center">
-            Don’t have a code? &nbsp;
-            <Link variant="subtitle2" underline="none" onClick={() => {}}>
-              Resend code
-            </Link>
-          </Typography>
+          {/* <Typography variant="body2" align="center"> */}
+          {/* Don’t have a code? &nbsp; */}
+          {/* <Link
+            variant="subtitle2"
+            // underline="none"
+            sx={{ cursor: "pointer" }}
+            onClick={() => {
+              sendEmailVerification();
+            }}
+          >
+            Send confirmation E-Mail
+          </Link> */}
+          {/* </Typography> */}
         </Box>
       </Container>
     </RootStyle>

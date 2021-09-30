@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 import { useSnackbar } from "notistack";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { Form, FormikProvider, useFormik } from "formik";
 // material
 import { OutlinedInput, FormHelperText, Stack } from "@material-ui/core";
@@ -23,7 +23,7 @@ function maxLength(object) {
 }
 
 export default function VerifyCodeForm() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
 
   const VerifyCodeSchema = Yup.object().shape({

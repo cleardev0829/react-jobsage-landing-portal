@@ -10,7 +10,7 @@ import { varFadeIn, varWrapEnter, varFadeInRight } from "../../animate";
 import { alpha, makeStyles } from "@material-ui/core/styles";
 
 import { MHidden } from "../../@material-extend";
-import { PATH_PAGE } from "src/routes/paths";
+import { PATH_AUTH, PATH_PAGE } from "src/routes/paths";
 import useAuth from "src/hooks/useAuth";
 
 // ----------------------------------------------------------------------
@@ -273,13 +273,12 @@ export default function LandingHero() {
                     size="large"
                     className={classes.buttonDesktop}
                     startIcon={<SearchIcon />}
-                    to={`${PATH_PAGE.postSearch}/${user.role}`}
-                    component={RouterLink}
-                    disabled={
-                      isAuthenticated && user.role === "Candidate"
-                        ? false
-                        : true
+                    to={
+                      isAuthenticated
+                        ? `${PATH_PAGE.postSearch}/${user.role}`
+                        : PATH_AUTH[`candidateLogin`]
                     }
+                    component={RouterLink}
                   >
                     Search
                   </Button>

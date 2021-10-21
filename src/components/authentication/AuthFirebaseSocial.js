@@ -60,7 +60,7 @@ export default function AuthFirebaseSocials() {
           <Icon icon={facebookFill} color="#1877F2" height={24} />
         </Button>
 
-        <Button
+        {/* <Button
           fullWidth
           size="large"
           color="inherit"
@@ -68,7 +68,7 @@ export default function AuthFirebaseSocials() {
           onClick={handleLoginTwitter}
         >
           <Icon icon={linkedinFill} color="#1C9CEA" height={24} />
-        </Button>
+        </Button> */}
       </Stack>
 
       <Divider sx={{ my: 3 }}>

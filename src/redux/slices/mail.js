@@ -1,10 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 // utils
-import axios from '../../utils/axios';
+import axios from "../../utils/axios";
 
 // ----------------------------------------------------------------------
 
-function objFromArray(array, key = 'id') {
+function objFromArray(array, key = "id") {
   return array.reduce((accumulator, current) => {
     accumulator[current[key]] = current;
     return accumulator;
@@ -15,11 +15,11 @@ const initialState = {
   isLoading: false,
   error: false,
   mails: { byId: {}, allIds: [] },
-  labels: []
+  labels: [],
 };
 
 const slice = createSlice({
-  name: 'mail',
+  name: "mail",
   initialState,
   reducers: {
     // START LOADING
@@ -56,8 +56,8 @@ const slice = createSlice({
       if (!state.mails.allIds.includes(mail.id)) {
         state.mails.allIds.push(mail.id);
       }
-    }
-  }
+    },
+  },
 });
 
 // Reducer
@@ -69,7 +69,7 @@ export function getLabels() {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/api/mail/labels');
+      const response = await axios.get("/api/mail/labels");
       dispatch(slice.actions.getLabelsSuccess(response.data.labels));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -83,7 +83,7 @@ export function getMails(params) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/api/mail/mails', { params });
+      const response = await axios.get("/api/mail/mails", { params });
       dispatch(slice.actions.getMailsSuccess(response.data.mails));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -97,10 +97,29 @@ export function getMail(mailId) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/api/mail/mail', {
-        params: { mailId }
+      const response = await axios.get("/api/mail/mail", {
+        params: { mailId },
       });
       dispatch(slice.actions.getMailSuccess(response.data.mail));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
+export function sendMail(mail) {
+  console.log(mail);
+
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const response = await axios.post(
+        "https://react-deviceapp-backend.herokuapp.com/email/sendMailOverHTTP",
+        {
+          ...mail,
+        }
+      );
+      console.log(response);
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

@@ -81,7 +81,7 @@ export default function EmployerRegister() {
               </Box>
             </Stack>
 
-            {!isAuthenticated && <AuthFirebaseSocials />}
+            {/* {!isAuthenticated && <AuthFirebaseSocials />} */}
 
             {isAuthenticated ? (
               <EmployerUpdateProfileForm />

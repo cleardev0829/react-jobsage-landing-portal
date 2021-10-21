@@ -86,7 +86,7 @@ export default function Router() {
           element: <CandidateRegister />,
         },
         { path: "reset-password", element: <ResetPassword /> },
-        { path: "verify", element: <VerifyCode /> },
+        { path: "verify/:from", element: <VerifyCode /> },
       ],
     },
 

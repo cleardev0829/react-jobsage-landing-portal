@@ -83,6 +83,9 @@ export default function UploadResumeFile({ error, file, sx, ...other }) {
 
   return (
     <Box sx={{ width: "100%", ...sx }}>
+      <Typography textAlign="left" color="text.secondary">
+        Upload your resume
+      </Typography>
       <DropZoneStyle
         {...getRootProps()}
         sx={{

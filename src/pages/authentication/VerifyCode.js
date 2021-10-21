@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-// import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import arrowIosBackFill from "@iconify/icons-eva/arrow-ios-back-fill";
 // material
 import { experimentalStyled as styled } from "@material-ui/core/styles";
@@ -13,12 +13,13 @@ import {
 // layouts
 import LogoOnlyLayout from "../../layouts/LogoOnlyLayout";
 // routes
-// import { PATH_AUTH } from "../../routes/paths";
+import { PATH_AUTH } from "../../routes/paths";
 // components
 import Page from "../../components/Page";
 // import { VerifyCodeForm } from "../../components/authentication/verify-code";
 // hooks
 // import useAuth from "../../hooks/useAuth";
+import { useParams } from "react-router-dom";
 
 // ----------------------------------------------------------------------
 
@@ -33,6 +34,7 @@ const RootStyle = styled(Page)(({ theme }) => ({
 
 export default function VerifyCode() {
   // const { sendEmailVerification } = useAuth();
+  const routeParams = useParams({});
 
   return (
     <RootStyle title="Verify | Minimal UI">
@@ -42,11 +44,10 @@ export default function VerifyCode() {
         <Box sx={{ maxWidth: 480, mx: "auto" }}>
           <Button
             size="small"
-            // component={RouterLink}
-            // to={PATH_AUTH.employerLogin}
+            component={RouterLink}
+            to={PATH_AUTH[`${routeParams.from.toLowerCase()}Login`]}
             startIcon={<Icon icon={arrowIosBackFill} width={20} height={20} />}
             sx={{ mb: 3 }}
-            onClick={() => window.history.back()}
           >
             Back
           </Button>

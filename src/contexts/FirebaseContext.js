@@ -125,7 +125,7 @@ function AuthProvider({ children }) {
               .signInWithEmailAndPassword(email, password)
               .then((authUser) => {
                 if (!authUser.user.emailVerified) {
-                  document.location.href = PATH_AUTH.verify;
+                  sendEmailVerification(role);
                 }
               })
           );
@@ -171,7 +171,7 @@ function AuthProvider({ children }) {
             displayName: `Employer`,
             role: "Employer",
           })
-          .then(() => sendEmailVerification());
+          .then(() => sendEmailVerification("Employer"));
       });
   };
 
@@ -211,7 +211,7 @@ function AuthProvider({ children }) {
                       role: "Candidate",
                       resume: url,
                     })
-                    .then(() => sendEmailVerification());
+                    .then(() => sendEmailVerification("Candidate"));
                 });
             });
           });
@@ -235,7 +235,7 @@ function AuthProvider({ children }) {
             displayName: `Candidate`,
             role: "Candidate",
           })
-          .then(() => sendEmailVerification());
+          .then(() => sendEmailVerification("Candidate"));
       });
   };
 
@@ -248,7 +248,7 @@ function AuthProvider({ children }) {
     await firebase.auth().sendPasswordResetEmail(email);
   };
 
-  const sendEmailVerification = () => {
+  const sendEmailVerification = (role) => {
     return firebase
       .auth()
       .currentUser.sendEmailVerification()
@@ -256,7 +256,7 @@ function AuthProvider({ children }) {
         firebase
           .auth()
           .signOut()
-          .then(() => (document.location.href = PATH_AUTH.verify));
+          .then(() => (document.location.href = `${PATH_AUTH.verify}/${role}`));
       });
   };
 

@@ -35,7 +35,7 @@ const data = {
     imageUrl: "/static/candidate-sourcing/candidate_sourcing.svg",
     buttonTitle: "Try now",
     direction: true,
-    to: PATH_PAGE.postSearch,
+    to: `${PATH_PAGE.postSearch}/Employer`,
   },
 };
 // ----------------------------------------------------------------------

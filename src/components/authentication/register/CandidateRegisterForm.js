@@ -22,7 +22,7 @@ import useAuth from "../../../hooks/useAuth";
 import useIsMountedRef from "../../../hooks/useIsMountedRef";
 //
 import { MIconButton } from "../../@material-extend";
-import countries from "./countries";
+import countries from "../countries";
 import { UploadResumeFile } from "src/components/upload";
 
 // ----------------------------------------------------------------------

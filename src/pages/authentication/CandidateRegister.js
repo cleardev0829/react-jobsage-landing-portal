@@ -81,7 +81,7 @@ export default function CandidateRegister() {
               </Box> */}
             </Stack>
 
-            {!isAuthenticated && <AuthFirebaseSocials />}
+            {/* {!isAuthenticated && <AuthFirebaseSocials />} */}
 
             {isAuthenticated ? (
               <CandidateUpdateProfileForm />

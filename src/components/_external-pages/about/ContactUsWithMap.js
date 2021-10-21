@@ -58,39 +58,6 @@ function MemberCard({ member }) {
 }
 
 export default function ContactUsWithMap() {
-  // const carouselRef = useRef();
-  // const theme = useTheme();
-
-  // const settings = {
-  //   speed: 500,
-  //   slidesToShow: 4,
-  //   centerMode: true,
-  //   centerPadding: "0 80px",
-  //   rtl: Boolean(theme.direction === "rtl"),
-  //   responsive: [
-  //     {
-  //       breakpoint: 1279,
-  //       settings: { slidesToShow: 3 },
-  //     },
-  //     {
-  //       breakpoint: 959,
-  //       settings: { slidesToShow: 2 },
-  //     },
-  //     {
-  //       breakpoint: 600,
-  //       settings: { slidesToShow: 1 },
-  //     },
-  //   ],
-  // };
-
-  // const handlePrevious = () => {
-  //   carouselRef.current.slickPrev();
-  // };
-
-  // const handleNext = () => {
-  //   carouselRef.current.slickNext();
-  // };
-
   return (
     <Container maxWidth="lg" sx={{ pt: 8, pb: 4, textAlign: "center" }}>
       <MotionInView variants={varFadeInUp}>

@@ -52,7 +52,7 @@ const data = {
 
 export default function PostSearch() {
   const classes = useStyles();
-  const routeParams = useParams([]);
+  const routeParams = useParams({});
 
   return (
     <RootStyle title="About us | Minimal-UI">

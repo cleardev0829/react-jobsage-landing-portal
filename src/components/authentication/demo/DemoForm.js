@@ -26,14 +26,18 @@ import useIsMountedRef from "../../../hooks/useIsMountedRef";
 //
 import { MIconButton } from "../../@material-extend";
 import { varFadeInUp, MotionInView } from "../../animate";
+import { sendMail } from "src/redux/slices/mail";
+import countries from "../countries";
+import { useDispatch, useSelector } from "../../../redux/store";
+import axios from "axios";
 
+const languages = [{ code: 0, label: "English" }];
 // ----------------------------------------------------------------------
 
 export default function RegisterForm() {
-  const { register } = useAuth();
+  const dispatch = useDispatch();
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  // const [showPassword, setShowPassword] = useState(false);
 
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -72,16 +76,17 @@ export default function RegisterForm() {
     validationSchema: RegisterSchema,
     onSubmit: async (values, { setErrors, setSubmitting }) => {
       try {
-        await register(
-          values.firstName,
-          values.lastName,
-          values.email,
-          values.phone,
-          values.companyName,
-          values.jobTitle,
-          values.contry
+        await axios.post(
+          "https://react-deviceapp-backend.herokuapp.com/email/sendMailOverHTTP",
+          {
+            from: "irekommend@gmail.com",
+            email: "hello@irekommend.com",
+            subject: "Demo",
+            emailBody: `<p>First Name: ${values.firstName}</p><p>Last Name: ${values.lastName}</p><p>Email: ${values.email}</p><p>Phone Number: ${values.phone}</p> <p>Company Name: ${values.companyName}</p><p>Job Title: ${values.jobTitle}</p><p>Country Name: ${values.country}</p><p>Job Title: ${values.jobTitle}</p><p>Preffered Languate: ${values.language}</p>`,
+          }
         );
-        enqueueSnackbar("Register success", {
+
+        enqueueSnackbar("Email success", {
           variant: "success",
           action: (key) => (
             <MIconButton size="small" onClick={() => closeSnackbar(key)}>
@@ -185,21 +190,37 @@ export default function RegisterForm() {
             fullWidth
             label="Country"
             {...getFieldProps("country")}
+            SelectProps={{ native: true }}
             error={Boolean(touched.country && errors.country)}
             helperText={touched.country && errors.country}
             required
             select
-          />
+          >
+            <option value="" />
+            {countries.map((option) => (
+              <option key={option.code} value={option.label}>
+                {option.label}
+              </option>
+            ))}
+          </TextField>
 
           <TextField
             fullWidth
             label="Preferred Language"
             {...getFieldProps("language")}
+            SelectProps={{ native: true }}
             error={Boolean(touched.language && errors.language)}
             helperText={touched.language && errors.language}
             required
             select
-          />
+          >
+            <option value="" />
+            {languages.map((option) => (
+              <option key={option.code} value={option.label}>
+                {option.label}
+              </option>
+            ))}
+          </TextField>
 
           <MotionInView variants={varFadeInUp}>
             <Typography
